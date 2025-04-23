@@ -6,9 +6,6 @@
     // listen to data from background.js
     // when does this run? only run when new tabs open, not when i refresh video
 
-    chrome.runtime.onMessage.addListener((obj, sender, response) => {
-        console.log("10 Received message in content script:", obj);
-    });
 
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
         const { type, value, videoId } = obj;
@@ -55,7 +52,7 @@
         };
         console.log("41 ", newBookmark);
 
-        currentVideoBookmakrs = await fetchBookmarks();
+        currentVideoBookmarks = await fetchBookmarks();
 
         // what is .sort(a,b )
         chrome.storage.sync.set({
