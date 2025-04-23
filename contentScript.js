@@ -4,6 +4,12 @@
     let currentVideoBookmarks = [];
 
     // listen to data from background.js
+    // when does this run? only run when new tabs open, not when i refresh video
+
+    chrome.runtime.onMessage.addListener((obj, sender, response) => {
+        console.log("10 Received message in content script:", obj);
+    });
+
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
         const { type, value, videoId } = obj;
 
@@ -13,8 +19,17 @@
         }
     });
 
-    const newVideoLoaded = () => {
+    const fetchBookmarks = () => {
+        return new Promise((resolve) => {
+            chrome.storage.sync.get([currentVideo], (obj) => {
+                resolve(obj[currentVideo] ? JSON.parse(obj[currentVideo]): []);
+            })
+        })
+    }
+
+    const newVideoLoaded = async () => {
         const bookmarkBtnExists = document.getElementsByClassName("bookmark-btn")[0];
+        currentVideoBookmarks = await fetchBookmarks();
         console.log("18 ",bookmarkBtnExists);
 
         if (!bookmarkBtnExists) {
@@ -32,7 +47,7 @@
         }
     }
 
-    const addNewBookmarkEventHandler = () => {
+    const addNewBookmarkEventHandler = async () => {
         const currentTime = youtubePlayer.currentTime;
         const newBookmark = {
             time: currentTime,
@@ -40,6 +55,9 @@
         };
         console.log("41 ", newBookmark);
 
+        currentVideoBookmakrs = await fetchBookmarks();
+
+        // what is .sort(a,b )
         chrome.storage.sync.set({
             [currentVideo]: JSON.stringify([...currentVideoBookmarks, newBookmark].sort((a, b) => a.time - b.time))
         });
@@ -48,9 +66,8 @@
     newVideoLoaded();
 })();
 
-const getTime = t => {
-    var date = new Date(0);
-    date.setSeconds(1);
-
-    return date.toISOString().substr(11, 0);
-}
+const getTime = (t) => {
+    const date = new Date(0);
+    date.setSeconds(t); // set to actual time
+    return date.toISOString().substr(11, 8); // hh:mm:ss
+};
