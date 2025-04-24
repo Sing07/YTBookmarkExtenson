@@ -1,8 +1,8 @@
 {
-    "name": "My YT Bookmarks",
+    "name": "Zin Bookmarks",
     "version": "0.1.0",
     "description": "Saving timestamps in YT videos",
-    "permissions": ["storage", "tabs", "webNavigation", "activeTab"],
+    "permissions": ["storage", "tabs", "activeTab"],
     "host_permissions": ["https://*.youtube.com/*"],
     "commands": {
         "reload": {

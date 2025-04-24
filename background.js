@@ -22,23 +22,3 @@ chrome.commands.onCommand.addListener((shortcut) => {
 })
 
 console.log("testing from background.js")
-
-// chrome.webNavigation.onHistoryStateUpdated.addListener(
-//     (details) => {
-//         if (details.url.includes("youtube.com/watch")) {
-//             const urlParams = new URLSearchParams(details.url.split("?")[1]);
-//             console.log(
-//                 "Sending NEW message to content script for video ID:",
-//                 urlParameters.get("v")
-//             );
-
-//             chrome.tabs.sendMessage(details.tabId, {
-//                 type: "NEW",
-//                 videoId: urlParams.get("v"),
-//             });
-//         }
-//     },
-//     {
-//         url: [{ hostContains: "youtube.com" }],
-//     }
-// );
