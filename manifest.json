@@ -4,6 +4,15 @@
     "description": "Saving timestamps in YT videos",
     "permissions": ["storage", "tabs", "webNavigation", "activeTab"],
     "host_permissions": ["https://*.youtube.com/*"],
+    "commands": {
+        "reload": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+E",
+                "mac": "Command+Shift+E"
+            },
+            "description": "Quickly reload Extension"
+        }
+    },
     "background": {
         "service_worker": "background.js"
     },
@@ -14,7 +23,7 @@
         }
     ],
     "web_accessible_resources": [
-        {
+        { 
             "resources": [
                 "assets/bookmark.png",
                 "assets/play.png",

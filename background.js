@@ -1,13 +1,10 @@
 chrome.tabs.onUpdated.addListener((tabId, tab) => {
     if (
-        changeInfo.status === "complete" &&
         tab.url &&
         tab.url.includes("youtube.com/watch")
     ) {
         const queryParameters = tab.url.split("?")[1];
         const urlParameters = new URLSearchParams(queryParameters);
-
-        // console.log("6 ejbglawbekfjwknjf,nqoeoqlfe", urlParameters);
 
         // send custom data/messages to ContentScript.js
         chrome.tabs.sendMessage(tabId, {
@@ -16,6 +13,15 @@ chrome.tabs.onUpdated.addListener((tabId, tab) => {
         });
     }
 });
+
+chrome.commands.onCommand.addListener((shortcut) => {
+  if (shortcut === 'reload'){
+    console.log('Reloading Extension!')
+    chrome.runtime.reload()
+  }
+})
+
+console.log("testing from background.js")
 
 // chrome.webNavigation.onHistoryStateUpdated.addListener(
 //     (details) => {
